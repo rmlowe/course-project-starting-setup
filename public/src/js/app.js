@@ -1,6 +1,10 @@
 
 var deferredPrompt;
 
+if (!window.Promise) {
+  window.Promise = Promise;
+}
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/sw.js')
@@ -34,6 +38,12 @@ xhr.responseType = 'json';
 xhr.onload = function () {
   console.log(xhr.response);
 };
+
+xhr.onerror = function () {
+  console.log('Error!');
+};
+
+xhr.send();
 
 fetch('https://httpbin.org/ip')
   .then(function (response) {
